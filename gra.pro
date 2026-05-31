@@ -5,8 +5,8 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp
-INCLUDEPATH += C:\Users\marci\studia\qt_programy\SFML\include
-LIBS += -LC:\Users\marci\studia\qt_programy\SFML\lib \
+INCLUDEPATH += C:\Users\jarek\Desktop\SFML-2.6.2\include
+LIBS += -LC:\Users\jarek\Desktop\SFML-2.6.2\lib \
             -lsfml-graphics \
             -lsfml-window \
             -lsfml-system

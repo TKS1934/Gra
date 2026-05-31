@@ -4,7 +4,6 @@
 #include "blok.h"
 #include "funkcje.h"
 
-
 using namespace std;
 
 
