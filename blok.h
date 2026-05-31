@@ -15,12 +15,12 @@ public:
         isPFP=(ID==2);
         isPFB=(ID==3);
         isStatic=1;
-        switch(id){
+        switch(ID){
             case 1:
                 this->setFillColor(sf::Color::Black);
                 break;
             case 2:
-                this->setFillColor(sf::Color::Yellow);
+                this->setFillColor(sf::Color(60,255,60,100));
                 break;
             case 3:
                 this->setFillColor(sf::Color::Magenta);

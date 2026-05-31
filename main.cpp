@@ -10,7 +10,7 @@ using namespace std;
 
 
 int main(){
-    sf::RenderWindow window(sf::VideoMode(800, 800), "My window");
+    sf::RenderWindow window(sf::VideoMode(2800, 1600), "My window");
     const float grawitacja=9.81;
     //const sf::Vector2f size1={20,20};
     int w_p_x=20; //wymiar planszy x
@@ -19,8 +19,10 @@ int main(){
     //blok *obj;
    // obj = new blok(size1,{200,550},{0,-10},window,grawitacja,1);
 
-    auto t=generowanie_planszy(w_p_x,w_p_y,window,grawitacja);
 
+
+   // auto t=generowanie_planszy(w_p_x,w_p_y,window,grawitacja);
+    auto t=generowanie_planszy_z_pliku("mapa1.txt",window,grawitacja);
 
     sf::Clock clock;
     bool stop = false;
@@ -32,6 +34,9 @@ int main(){
             // "close requested" event: we close the window
             if (event.type == sf::Event::Closed)
                 window.close();
+            if (event.type == sf::Event::KeyReleased)
+                if (event.key.code == sf::Keyboard::Escape)
+                    window.close();
             if (event.type == sf::Event::KeyReleased) {
                 if (event.key.code == sf::Keyboard::Space) {
                     std::cout << "Space" << std::endl;
@@ -49,9 +54,9 @@ int main(){
                 }
             }
 
-
+//a
         // clear the window with black color
-        window.clear(sf::Color::White);
+        window.clear(sf::Color(128,128,128));
 
         // draw everything here...
         for(auto pom:t){
