@@ -15,7 +15,7 @@ public:
         isPFP=(ID==2);
         isPFB=(ID==3);
         isStatic=1;
-        switch(id){
+        switch(ID){
             case 1:
                 this->setFillColor(sf::Color::Black);
                 break;

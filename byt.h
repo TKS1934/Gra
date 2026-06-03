@@ -12,8 +12,6 @@ protected:
     sf::Vector2f position;
     float gravity;
     const sf::RenderWindow* window;
-    //bool isPFP; //is possible to go trough for player
-    //bool isPFB; //is possible to go trough for block
 public:
 
     byt(const sf::Vector2f& size,const sf::Vector2f& position, const sf::Vector2f& velocity, const sf::RenderWindow& window,float grawitacja, int ID) :
