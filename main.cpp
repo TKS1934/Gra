@@ -20,7 +20,7 @@ int main(){
    // obj = new blok(size1,{200,550},{0,-10},window,grawitacja,1);
 
    // auto t=generowanie_planszy(w_p_x,w_p_y,window,grawitacja);
-    auto t=generowanie_planszy_z_pliku("mapa2.txt",window,grawitacja);
+    auto t=generowanie_planszy_z_pliku("mapa1.txt",window,grawitacja);
 
     sf::Clock clock;
     bool stop = false;
@@ -42,8 +42,6 @@ int main(){
                 }
             }
         }
-
-
 
 
 

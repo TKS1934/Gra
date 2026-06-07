@@ -53,7 +53,7 @@ vector<vector<blok>> generowanie_planszy_z_pliku(const std::string& nazwa_pliku,
 
     // 2. Ładujemy tekstury tylko RAZ, przy pierwszym generowaniu mapy
     if (!czyZaladowanoTekstury) {
-        teksturyBlokow[1].loadFromFile("cegla3.png");
+        teksturyBlokow[1].loadFromFile("cegla4.png");
         teksturyBlokow[2].loadFromFile("stop sign.png");
         teksturyBlokow[3].loadFromFile("liscie.png");
         czyZaladowanoTekstury = true; // Zapamiętujemy, żeby nie ładować ponownie
