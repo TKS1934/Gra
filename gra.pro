@@ -5,11 +5,18 @@ CONFIG -= qt
 
 SOURCES += \
         main.cpp
-INCLUDEPATH += C:\Users\jarek\Desktop\SFML-2.6.2\include
-LIBS += -LC:\Users\jarek\Desktop\SFML-2.6.2\lib \
-            -lsfml-graphics \
-            -lsfml-window \
-            -lsfml-system
+
+INCLUDEPATH += "$$PWD/SFML/include"
+
+
+LIBS += -L"$$PWD/SFML/lib"
+
+
+CONFIG(debug, debug|release) {
+    LIBS += -lsfml-graphics-d -lsfml-window-d -lsfml-system-d -lsfml-audio-d -lsfml-network-d
+} else {
+    LIBS += -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio -lsfml-network
+}
 
 HEADERS += \
     blok.h \

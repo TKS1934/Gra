@@ -16,14 +16,22 @@ protected:
     //bool isPFB; //is possible to go trough for block
 public:
 
-    byt(const sf::Vector2f& size,const sf::Vector2f& position, const sf::Vector2f& velocity, const sf::RenderWindow& window,float grawitacja, int ID) :
+    byt(const sf::Vector2f& size,const sf::Vector2f& position, const sf::Vector2f& velocity, const sf::RenderWindow& window,float grawitacja, int ID,const sf::Texture* tex = nullptr) :
         sf::RectangleShape(size), velocity(velocity), window(&window)
     {this->position=position;
         gravity=grawitacja;
         id=ID;
         this->setPosition(position.x,position.y);
-        this->setFillColor(sf::Color(ID*10+50, 100-ID*5, 255-ID*40));
+
+        if (tex != nullptr) {
+            this->setTexture(tex); // Nakładamy teksturę
+            this->setFillColor(sf::Color::White); // Resetujemy kolor, żeby tekstura miała naturalne barwy
+        } else {
+            // Jeśli nie ma tekstury, ustawiamy domyślny kolor z Twojego algorytmu
+            this->setFillColor(sf::Color(ID*10+50, 100-ID*5, 255-ID*40));
+        }
     };
+
     bool FisStatic ()const
     {
         return isStatic;

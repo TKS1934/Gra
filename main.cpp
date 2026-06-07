@@ -19,10 +19,8 @@ int main(){
     //blok *obj;
    // obj = new blok(size1,{200,550},{0,-10},window,grawitacja,1);
 
-
-
    // auto t=generowanie_planszy(w_p_x,w_p_y,window,grawitacja);
-    auto t=generowanie_planszy_z_pliku("mapa1.txt",window,grawitacja);
+    auto t=generowanie_planszy_z_pliku("mapa2.txt",window,grawitacja);
 
     sf::Clock clock;
     bool stop = false;
@@ -35,7 +33,7 @@ int main(){
             if (event.type == sf::Event::Closed)
                 window.close();
             if (event.type == sf::Event::KeyReleased)
-                if (event.key.code == sf::Keyboard::Escape)
+                if (event.key.code == sf::Keyboard::Enter)
                     window.close();
             if (event.type == sf::Event::KeyReleased) {
                 if (event.key.code == sf::Keyboard::Space) {
@@ -44,6 +42,10 @@ int main(){
                 }
             }
         }
+
+
+
+
 
         sf::Time elapsed = clock.restart();
 

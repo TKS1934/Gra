@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-
 using namespace std;
 
 vector<vector<int>> generowanie_pol(int x,int y){
@@ -46,31 +45,41 @@ vector<vector<int>> wczytaj_mape_z_pliku(const string& nazwa_pliku) {
     return wczytana_mapa;
 }
 
-// Zmieniamy argumenty - zamiast x i y, podajemy nazwę pliku
 vector<vector<blok>> generowanie_planszy_z_pliku(const std::string& nazwa_pliku, const sf::RenderWindow& window, float graw) {
+
+    // 1. Zmienne statyczne - żyją przez cały czas działania gry
+    static std::vector<sf::Texture> teksturyBlokow(4);
+    static bool czyZaladowanoTekstury = false;
+
+    // 2. Ładujemy tekstury tylko RAZ, przy pierwszym generowaniu mapy
+    if (!czyZaladowanoTekstury) {
+        teksturyBlokow[1].loadFromFile("cegla3.png");
+        teksturyBlokow[2].loadFromFile("stop sign.png");
+        teksturyBlokow[3].loadFromFile("liscie.png");
+        czyZaladowanoTekstury = true; // Zapamiętujemy, żeby nie ładować ponownie
+    }
+
+    // 3. Wczytywanie pliku tekstowego
     vector<vector<int>> t = wczytaj_mape_z_pliku(nazwa_pliku);
     vector<vector<blok>> tk;
 
-    if (t.empty() || t[0].empty()) {
-        return tk; // Zabezpieczenie przed pustym plikiem
-    }
+    if (t.empty() || t[0].empty()) return tk;
 
-    // Dynamicznie obliczamy wymiary wczytanej mapy
-    int w_p_y = t.size();       // ilość rzędów
-    int w_p_x = t[0].size();    // ilość kolumn
-
-    // Obliczamy wielkość pojedynczego bloku tak, by wypełnił okno
+    int w_p_y = t.size();
+    int w_p_x = t[0].size();
     sf::Vector2f size1 = {float(window.getSize().x) / w_p_x, float(window.getSize().y) / w_p_y};
 
-    int j = 0; // Oś Y
+    int j = 0;
     for (auto w : t) {
         vector<blok> pom;
-        int i = 0; // Oś X
+        int i = 0;
         for (auto z : w) {
-            // Obliczamy fizyczną pozycję bloku w pikselach
             sf::Vector2f pozycja = {float(i * size1.x), float(j * size1.y)};
 
-            blok pom1(size1, pozycja, {0,0}, window, graw, z);
+            // Przypisanie wskaźnika do STATYCZNEJ tekstury
+            const sf::Texture* tex = (z > 0 && z < teksturyBlokow.size()) ? &teksturyBlokow[z] : nullptr;
+
+            blok pom1(size1, pozycja, {0,0}, window, graw, z, tex);
             pom.push_back(pom1);
             i++;
         }
@@ -79,7 +88,6 @@ vector<vector<blok>> generowanie_planszy_z_pliku(const std::string& nazwa_pliku,
     }
     return tk;
 }
-
 vector<vector<blok>> generowanie_planszy(int x,int y, const sf::RenderWindow& window,float graw){
     vector<vector<int>> t=generowanie_pol(x,y);
     sf::Vector2f size1={float(window.getSize().x)/x,float(window.getSize().y)/y};
