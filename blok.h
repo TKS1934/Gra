@@ -9,7 +9,9 @@ protected:
     bool isPFP; //is possible to go trough for player
     bool isPFB; //is possible to go trough for block
 public:
-
+    int fispfp(){
+        return isPFP;
+    }
     blok(const sf::Vector2f& size1,const sf::Vector2f& position1, const sf::Vector2f& velocity1, const sf::RenderWindow& window,float graw,int ID) :
         byt(size1, position1, velocity1, window,graw,ID){
         isPFP=(ID==2);

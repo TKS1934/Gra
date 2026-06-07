@@ -14,4 +14,5 @@ LIBS += -LC:\Users\marci\studia\qt_programy\SFML\lib \
 HEADERS += \
     blok.h \
     byt.h \
-    funkcje.h
+    funkcje.h \
+    gracz.h
