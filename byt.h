@@ -36,7 +36,7 @@ public:
     {
         return isStatic;
     }
-
+/*
     void ruch(sf::Time elapsed){
         if(isStatic){
             return;
@@ -66,7 +66,7 @@ public:
 
             velocity.y = 0;
         }
-    }
+    }*/
 
 };
 

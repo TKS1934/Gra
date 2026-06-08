@@ -21,4 +21,5 @@ CONFIG(debug, debug|release) {
 HEADERS += \
     blok.h \
     byt.h \
-    funkcje.h
+    funkcje.h\
+    gracz.h
