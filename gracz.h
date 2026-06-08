@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
+class skrzynka;
+
 class gracz: public byt{
 protected:
     bool tG=1;
@@ -55,8 +57,9 @@ public:
     }
 
 
-    friend void ruch(sf::Time elapsed,gracz& g1,std::vector<std::vector<blok>>& t,const float gravity,const sf::RenderWindow& window);
+    friend void ruch(sf::Time elapsed, gracz& g1, skrzynka& s, std::vector<std::vector<blok>>& t, const float gravity, const sf::RenderWindow& window);
     friend void kolizja_b_gra(gracz& bi, const sf::RenderWindow& window);
     friend void kolizja_bloki_Y(gracz& g1, std::vector<std::vector<blok>>& t);
     friend void kolizja_bloki_X(gracz& g1, std::vector<std::vector<blok>>& t);
+    friend void kolizja_skrzynka_Y(gracz& g1, skrzynka& s);
 };

@@ -9,17 +9,17 @@ vector<vector<int>> wczytaj_mape_z_pliku(const string& nazwa_pliku) {
 
     if (!plik.is_open()) {
         cout << "Blad: Nie mozna otworzyc pliku " << nazwa_pliku << "!" << endl;
-        return wczytana_mapa; // Zwraca puste, jeśli plik nie istnieje
+        return wczytana_mapa;
     }
 
     string linia;
-    // Czytamy plik linijka po linijce (to będą nasze rzędy Y)
+
     while (getline(plik, linia)) {
         vector<int> rzad;
         stringstream ss(linia);
         int typ_bloku;
 
-        // Czytamy kolejne liczby z danej linijki oddzielone spacją (nasze X)
+
         while (ss >> typ_bloku) {
             rzad.push_back(typ_bloku);
         }
@@ -32,19 +32,19 @@ vector<vector<int>> wczytaj_mape_z_pliku(const string& nazwa_pliku) {
 
 vector<vector<blok>> generowanie_planszy_z_pliku(const std::string& nazwa_pliku, const sf::RenderWindow& window, float graw) {
 
-    // 1. Zmienne statyczne - żyją przez cały czas działania gry
+
     static std::vector<sf::Texture> teksturyBlokow(4);
     static bool czyZaladowanoTekstury = false;
 
-    // 2. Ładujemy tekstury tylko RAZ, przy pierwszym generowaniu mapy
+
     if (!czyZaladowanoTekstury) {
         teksturyBlokow[1].loadFromFile("cegla4.png");
         teksturyBlokow[2].loadFromFile("stop sign.png");
         teksturyBlokow[3].loadFromFile("liscie.png");
-        czyZaladowanoTekstury = true; // Zapamiętujemy, żeby nie ładować ponownie
+        czyZaladowanoTekstury = true;
     }
 
-    // 3. Wczytywanie pliku tekstowego
+
     vector<vector<int>> t = wczytaj_mape_z_pliku(nazwa_pliku);
     vector<vector<blok>> tk;
 
@@ -61,7 +61,7 @@ vector<vector<blok>> generowanie_planszy_z_pliku(const std::string& nazwa_pliku,
         for (auto z : w) {
             sf::Vector2f pozycja = {float(i * size1.x), float(j * size1.y)};
 
-            // Przypisanie wskaźnika do STATYCZNEJ tekstury
+
             const sf::Texture* tex = (z > 0 && z < teksturyBlokow.size()) ? &teksturyBlokow[z] : nullptr;
 
             blok pom1(size1, pozycja, {0,0}, window, graw, z, tex);
@@ -76,14 +76,13 @@ vector<vector<blok>> generowanie_planszy_z_pliku(const std::string& nazwa_pliku,
 
 
 
-//==========================================
 
 void kolizja_b_gra(gracz& bi, const sf::RenderWindow& window) {
     sf::FloatRect b = bi.getGlobalBounds();
 
     // Kolizja z lewą krawędzią okna
     if (b.left < 0) {
-        bi.setPosition(0, bi.getPosition().y); // Zmieniono z 20 na 0 dla precyzji, dopasuj jeśli potrzebujesz marginesu
+        bi.setPosition(0, bi.getPosition().y);
         bi.velocity.x = 0;
     }
     // Kolizja z prawą krawędzią okna
@@ -104,7 +103,7 @@ void kolizja_b_gra(gracz& bi, const sf::RenderWindow& window) {
     }
 }
 
-// Rozbiliśmy funkcję kolizji na dwie niezależne osie
+
 void kolizja_bloki_X(gracz& g1, vector<vector<blok>>& t) {
     for (auto &pom : t) {
         for (auto &r : pom) {
@@ -124,7 +123,7 @@ void kolizja_bloki_X(gracz& g1, vector<vector<blok>>& t) {
 }
 
 void kolizja_bloki_Y(gracz& g1, vector<vector<blok>>& t) {
-    g1.tG = false; // Resetujemy stan "na ziemi" przed sprawdzeniem kolizji
+
 
     for (auto &pom : t) {
         for (auto &r : pom) {
@@ -144,20 +143,126 @@ void kolizja_bloki_Y(gracz& g1, vector<vector<blok>>& t) {
     }
 }
 
-void ruch(sf::Time elapsed, gracz& g1, vector<vector<blok>>& t, const float gravity, const sf::RenderWindow& window) {
+void kolizja_skrzynka_bloki_X(skrzynka& s, vector<vector<blok>>& t) {
+    for (auto &pom : t) {
+        for (auto &r : pom) {
+            if (!r.fispfb()) {
+                if (s.getGlobalBounds().intersects(r.getGlobalBounds())) {
+                    if (s.getPosition().x < r.getPosition().x) { // Ruch w prawo
+                        s.setPosition(r.getPosition().x - s.getGlobalBounds().width, s.getPosition().y);
+                    } else { // Ruch w lewo
+                        s.setPosition(r.getPosition().x + r.getGlobalBounds().width, s.getPosition().y);
+                    }
+                }
+            }
+        }
+    }
+}
+
+void kolizja_skrzynka_bloki_Y(skrzynka& s, vector<vector<blok>>& t) {
+    for (auto &pom : t) {
+        for (auto &r : pom) {
+            if (!r.fispfb()) {
+                if (s.getGlobalBounds().intersects(r.getGlobalBounds())) {
+                    if (s.getVelocity().y > 0) { // Spadanie na blok
+                        s.setPosition(s.getPosition().x, r.getPosition().y - s.getGlobalBounds().height);
+                    } else if (s.getVelocity().y < 0) {
+                        s.setPosition(s.getPosition().x, r.getPosition().y + r.getGlobalBounds().height);
+                    }
+                    s.getVelocity().y = 0;
+                }
+            }
+        }
+    }
+}
+void kolizja_skrzynka_X(gracz& g1, skrzynka& s) {
+    if (g1.getGlobalBounds().intersects(s.getGlobalBounds())) {
+        if (g1.getVelocity().x > 0) { // Ruch w prawo -> uderzenie w lewy bok skrzynki
+            g1.setPosition(s.getPosition().x - g1.getGlobalBounds().width, g1.getPosition().y);
+        }
+        else if (g1.getVelocity().x < 0) { // Ruch w lewo -> uderzenie w prawy bok skrzynki
+            g1.setPosition(s.getPosition().x + s.getGlobalBounds().width, g1.getPosition().y);
+        }
+        g1.getVelocity().x = 0; // Zatrzymujemy gracza w poziomie
+    }
+}
+
+void kolizja_skrzynka_Y(gracz& g1, skrzynka& s) {
+    if (g1.getGlobalBounds().intersects(s.getGlobalBounds())) {
+        if (g1.getVelocity().y > 0) { //  lądowanie na skrzynce
+            g1.setPosition(g1.getPosition().x, s.getPosition().y - g1.getGlobalBounds().height);
+            g1.tG = true; //  może skakać
+        }
+        else if (g1.getVelocity().y < 0) { // Skok w górę -> uderzenie w skrzynkę od spodu
+            g1.setPosition(g1.getPosition().x, s.getPosition().y + s.getGlobalBounds().height);
+        }
+        g1.getVelocity().y = 0; // Zerujemy prędkość pionową
+    }
+}
+
+
+void ruch(sf::Time elapsed, gracz& g1, skrzynka& s, vector<vector<blok>>& t, const float gravity, const sf::RenderWindow& window) {
     float dt = elapsed.asSeconds();
 
-    // 1. Grawitacja (zastosowanie delta time)
+    // Grawitacja
     g1.velocity.y += gravity * dt;
+    s.getVelocity().y += gravity * dt;
 
-    // 2. Krok Osi X: Ruch -> Kolizje z blokami
+    // Najpierw fizycznie przesuwamy gracza w poziomie
     g1.move(g1.velocity.x * dt, 0);
+
+    //  kolizja gracza z mapą w osi X
     kolizja_bloki_X(g1, t);
 
-    // 3. Krok Osi Y: Ruch -> Kolizje z blokami
-    g1.move(0, g1.velocity.y * dt);
-    kolizja_bloki_Y(g1, t);
+    //  Wykrywanie interakcji ze skrzynką w osi X
+    if (g1.getGlobalBounds().intersects(s.getGlobalBounds())) {
+        if (g1.velocity.x > 0) { // Gracz idzie w prawo -> pcha skrzynkę w prawo
+            s.setPosition(g1.getGlobalBounds().left + g1.getGlobalBounds().width, s.getPosition().y);
+            kolizja_skrzynka_bloki_X(s, t);
 
-    // 4. Marginesy mapy / okna na samym końcu
+            // Jeśli skrzynka natrafiła na ścianę i cofnęła się na gracza:
+            if (g1.getGlobalBounds().intersects(s.getGlobalBounds())) {
+                g1.setPosition(s.getGlobalBounds().left - g1.getGlobalBounds().width, g1.getPosition().y);
+                g1.velocity.x = 0;
+            }
+        }
+        else if (g1.velocity.x < 0) { // Gracz idzie w lewo -> pcha skrzynkę w lewo
+            s.setPosition(g1.getGlobalBounds().left - s.getGlobalBounds().width, s.getPosition().y);
+            kolizja_skrzynka_bloki_X(s, t);
+
+            // Jeśli skrzynka natrafiła na ścianę i cofnęła się na gracza:
+            if (g1.getGlobalBounds().intersects(s.getGlobalBounds())) {
+                g1.setPosition(s.getGlobalBounds().left + s.getGlobalBounds().width, g1.getPosition().y);
+                g1.velocity.x = 0;
+            }
+        }
+    }
+
+
+    // Ruch pionowy skrzynki kolizja z podłogą mapy
+    s.move(0, s.getVelocity().y * dt);
+    kolizja_skrzynka_bloki_Y(s, t);
+
+    // Ruch pionowy gracza
+    g1.move(0, g1.velocity.y * dt);
+
+
+    // Resetujemy stan stanięcia na ziemi
+    g1.tG = false;
+
+    kolizja_bloki_Y(g1, t); // Kolizja pionowa z kafelkami mapy
+
+    // Kolizja pionowa gracza ze skrzynką
+    if (g1.getGlobalBounds().intersects(s.getGlobalBounds())) {
+        if (g1.velocity.y > 0) { // Gracz spada na skrzynkę
+            g1.setPosition(g1.getPosition().x, s.getGlobalBounds().top - g1.getGlobalBounds().height);
+            g1.tG = true; // Gracz traktuje skrzynkę jak podłogę
+        }
+        else if (g1.velocity.y < 0) { // Gracz uderza głową w skrzynkę od dołu
+            g1.setPosition(g1.getPosition().x, s.getGlobalBounds().top + s.getGlobalBounds().height);
+        }
+        g1.velocity.y = 0; // Zerujemy prędkość pionową
+    }
+
     kolizja_b_gra(g1, window);
 }

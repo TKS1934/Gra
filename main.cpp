@@ -4,18 +4,21 @@ using namespace std;
 #include <SFML/Window.hpp>
 #include "blok.h"
 #include "gracz.h"
+#include "skrzynka1.h"
 #include "funkcje.h"
 
 
 int main(){
     sf::RenderWindow window(sf::VideoMode(2800, 1600), "My window");
-    const float grawitacja=500;
+    const float grawitacja=400;
     //const sf::Vector2f size1={20,20};
     int w_p_x=20; //wymiar planszy x
     int w_p_y=20; //analogicznie y
 
+
     //blok *obj;
    // obj = new blok(size1,{200,550},{0,-10},window,grawitacja,1);
+
 
    // auto t=generowanie_planszy(w_p_x,w_p_y,window,grawitacja);
     auto t=generowanie_planszy_z_pliku("mapa2.txt",window,grawitacja);
@@ -24,6 +27,8 @@ int main(){
     gracz *gracz1;
     gracz1= new gracz({10,20},{250,250},{0,0},window,grawitacja,0);
 
+    skrzynka *skrzynka1;
+    skrzynka1 = new skrzynka({40, 40}, {250, 250}, {0,0}, window, grawitacja, 1);
 
 
     sf::Clock clock;
@@ -47,12 +52,10 @@ int main(){
                 }
             }
         }
-
-
         sf::Time elapsed = clock.restart();
 
         gracz1->ruchom(event);
-        ruch(elapsed,*gracz1,t,grawitacja,window);
+        ruch(elapsed, *gracz1, *skrzynka1, t, grawitacja, window);
 //a
         // clear the window with black color
         window.clear(sf::Color(128,128,128));
@@ -64,8 +67,12 @@ int main(){
             }
         }
 
+
+
+    window.draw(*skrzynka1);
     window.draw(*gracz1);
         // end the current frame
         window.display();
     }
+
 }

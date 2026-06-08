@@ -12,6 +12,10 @@ public:
     int fispfp(){
         return isPFP;}
 
+    bool fispfb() {
+        return isPFB;
+    }
+
     blok(const sf::Vector2f& size1,const sf::Vector2f& position1, const sf::Vector2f& velocity1, const sf::RenderWindow& window,float graw,int ID, const sf::Texture* tex=nullptr) :
         byt(size1, position1, velocity1, window,graw,ID,tex){
         isPFP=(ID==3);
@@ -19,22 +23,6 @@ public:
         isStatic=1;
 
 
-        /*
-        switch(ID){
-            case 1:
-                this->setFillColor(sf::Color::Black);
-                break;
-            case 2:
-                this->setFillColor(sf::Color(60,255,60,100));
-                break;
-            case 3:
-                this->setFillColor(sf::Color::Magenta);
-                break;
-            default:
-                this->setFillColor(sf::Color::Transparent);
-                isPFP=1;
-                isPFB=1;
-            }*/
         if(ID==0){
             this->setFillColor(sf::Color::Transparent); // Powietrze pozostaje niewidoczne
             isPFP = 1;

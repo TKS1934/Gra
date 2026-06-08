@@ -56,7 +56,8 @@ OBJECTS       = release/main.o
 DIST          =  blok.h \
 		byt.h \
 		funkcje.h \
-		gracz.h ..\..\main.cpp
+		gracz.h \
+		skrzynka1.h ..\..\main.cpp
 QMAKE_TARGET  = gra
 DESTDIR        = release\ #avoid trailing-slash linebreak
 TARGET         = gra.exe
@@ -183,6 +184,7 @@ release/main.o: ../../main.cpp ../../SFML/include/SFML/Graphics.hpp \
 		../../blok.h \
 		../../byt.h \
 		../../gracz.h \
+		../../skrzynka1.h \
 		../../funkcje.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\..\main.cpp
 
