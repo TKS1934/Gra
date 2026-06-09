@@ -11,9 +11,7 @@ using namespace std;
 int main(){
     sf::RenderWindow window(sf::VideoMode(2800, 1600), "My window");
     const float grawitacja=400;
-    //const sf::Vector2f size1={20,20};
-    int w_p_x=20; //wymiar planszy x
-    int w_p_y=20; //analogicznie y
+
 
 
     //blok *obj;
@@ -56,7 +54,7 @@ int main(){
 
         gracz1->ruchom(event);
         ruch(elapsed, *gracz1, *skrzynka1, t, grawitacja, window);
-//a
+
         // clear the window with black color
         window.clear(sf::Color(128,128,128));
 
@@ -66,6 +64,7 @@ int main(){
                 window.draw(r);
             }
         }
+
 
 
 

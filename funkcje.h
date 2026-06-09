@@ -190,8 +190,13 @@ void ruch(sf::Time elapsed, gracz& g1, skrzynka& s, vector<vector<blok>>& t, con
     //  kolizja gracza z mapą w osi X
     kolizja_bloki_X(g1, t);
 
+
     //  Wykrywanie interakcji ze skrzynką w osi X
     if (g1.getGlobalBounds().intersects(s.getGlobalBounds())) {
+        float tolerancja = 4.0f;
+        if(g1.getGlobalBounds().top + g1.getGlobalBounds().height-tolerancja>s.getGlobalBounds().top && g1.getGlobalBounds().top+tolerancja < s.getGlobalBounds().top + s.getGlobalBounds().height){
+
+
         if (g1.velocity.x > 0) { // Gracz idzie w prawo -> pcha skrzynkę w prawo
             s.setPosition(g1.getGlobalBounds().left + g1.getGlobalBounds().width, s.getPosition().y);
             kolizja_skrzynka_bloki_X(s, t);
@@ -212,7 +217,7 @@ void ruch(sf::Time elapsed, gracz& g1, skrzynka& s, vector<vector<blok>>& t, con
                 g1.velocity.x = 0;
             }
         }
-    }
+        }}
 
 
     // Ruch pionowy skrzynki kolizja z podłogą mapy
@@ -226,7 +231,7 @@ void ruch(sf::Time elapsed, gracz& g1, skrzynka& s, vector<vector<blok>>& t, con
     // Resetujemy stan stanięcia na ziemi
     g1.tG = false;
 
-    kolizja_bloki_Y(g1, t); // Kolizja pionowa z kafelkami mapy
+
 
     // Kolizja pionowa gracza ze skrzynką
     if (g1.getGlobalBounds().intersects(s.getGlobalBounds())) {
@@ -239,6 +244,8 @@ void ruch(sf::Time elapsed, gracz& g1, skrzynka& s, vector<vector<blok>>& t, con
         }
         g1.velocity.y = 0; // Zerujemy prędkość pionową
     }
+
+    kolizja_bloki_Y(g1, t); // Kolizja pionowa z kafelkami mapy
 
     kolizja_b_gra(g1, window);
 }

@@ -38,7 +38,10 @@ public:
                 velocity.x=200.0f;
             }
             if (event.key.code == sf::Keyboard::Left){
-                velocity.x=(-200.0f);
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+                    velocity.x=(-200.0f);
+                }
+
             }
         }
         else if(event.type == sf::Event::KeyReleased){
