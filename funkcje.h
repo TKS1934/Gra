@@ -175,30 +175,6 @@ void kolizja_skrzynka_bloki_Y(skrzynka& s, vector<vector<blok>>& t) {
         }
     }
 }
-void kolizja_skrzynka_X(gracz& g1, skrzynka& s) {
-    if (g1.getGlobalBounds().intersects(s.getGlobalBounds())) {
-        if (g1.getVelocity().x > 0) { // Ruch w prawo -> uderzenie w lewy bok skrzynki
-            g1.setPosition(s.getPosition().x - g1.getGlobalBounds().width, g1.getPosition().y);
-        }
-        else if (g1.getVelocity().x < 0) { // Ruch w lewo -> uderzenie w prawy bok skrzynki
-            g1.setPosition(s.getPosition().x + s.getGlobalBounds().width, g1.getPosition().y);
-        }
-        g1.getVelocity().x = 0; // Zatrzymujemy gracza w poziomie
-    }
-}
-
-void kolizja_skrzynka_Y(gracz& g1, skrzynka& s) {
-    if (g1.getGlobalBounds().intersects(s.getGlobalBounds())) {
-        if (g1.getVelocity().y > 0) { //  lądowanie na skrzynce
-            g1.setPosition(g1.getPosition().x, s.getPosition().y - g1.getGlobalBounds().height);
-            g1.tG = true; //  może skakać
-        }
-        else if (g1.getVelocity().y < 0) { // Skok w górę -> uderzenie w skrzynkę od spodu
-            g1.setPosition(g1.getPosition().x, s.getPosition().y + s.getGlobalBounds().height);
-        }
-        g1.getVelocity().y = 0; // Zerujemy prędkość pionową
-    }
-}
 
 
 void ruch(sf::Time elapsed, gracz& g1, skrzynka& s, vector<vector<blok>>& t, const float gravity, const sf::RenderWindow& window) {
