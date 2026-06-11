@@ -57,6 +57,7 @@ DIST          =  blok.h \
 		byt.h \
 		funkcje.h \
 		gracz.h \
+		hak.h \
 		skrzynka1.h ..\..\main.cpp
 QMAKE_TARGET  = gra
 DESTDIR        = release\ #avoid trailing-slash linebreak
@@ -183,8 +184,9 @@ release/main.o: ../../main.cpp ../../SFML/include/SFML/Graphics.hpp \
 		../../SFML/include/SFML/Graphics/VertexBuffer.hpp \
 		../../blok.h \
 		../../byt.h \
-		../../gracz.h \
 		../../skrzynka1.h \
+		../../hak.h \
+		../../gracz.h \
 		../../funkcje.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\..\main.cpp
 

@@ -3,22 +3,16 @@ using namespace std;
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include "blok.h"
-#include "gracz.h"
 #include "skrzynka1.h"
+#include "hak.h"
+#include "gracz.h"
 #include "funkcje.h"
 
 
 int main(){
-    sf::RenderWindow window(sf::VideoMode(2800, 1600), "My window");
+    sf::RenderWindow window(sf::VideoMode(2800, 1600), "My window",sf::Style::Fullscreen);
     const float grawitacja=400;
 
-
-
-    //blok *obj;
-   // obj = new blok(size1,{200,550},{0,-10},window,grawitacja,1);
-
-
-   // auto t=generowanie_planszy(w_p_x,w_p_y,window,grawitacja);
     auto t=generowanie_planszy_z_pliku("mapa2.txt",window,grawitacja);
 
 
@@ -26,11 +20,13 @@ int main(){
     gracz1= new gracz({10,20},{250,250},{0,0},window,grawitacja,0);
 
     skrzynka *skrzynka1;
-    skrzynka1 = new skrzynka({40, 40}, {250, 250}, {0,0}, window, grawitacja, 1);
+    skrzynka1 = new skrzynka({40, 40}, {250, 250}, {0,0}, window, grawitacja, 4);
 
+    Hak hak;
+    hak.silaPrzyciagania=grawitacja*(10/3);
 
     sf::Clock clock;
-    bool stop = false;
+
     // run the program as long as the window is open
     while (window.isOpen()) {
         // check all the window's events that were triggered since the last iteration of the loop
@@ -43,17 +39,38 @@ int main(){
             if (event.type == sf::Event::KeyReleased)
                 if (event.key.code == sf::Keyboard::Enter)
                     window.close();
-            if (event.type == sf::Event::KeyReleased) {
-                if (event.key.code == sf::Keyboard::Space) {
-                    std::cout << "Space" << std::endl;
-                    stop = !stop;
+
+            if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
+                if (hak.stan == StanHaka::Nieaktywny) {
+                    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+                    sf::Vector2f mousePosF(mousePos.x, mousePos.y);
+
+                    hak.pozycja = gracz1->getPosition();
+                    sf::Vector2f kierunek = mousePosF - gracz1->getPosition();
+                    float dlugosc = std::hypot(kierunek.x, kierunek.y);
+
+                    if (dlugosc > 0.f) {
+                        hak.kierunek = kierunek / dlugosc;
+                        hak.stan = StanHaka::Wystrzelony;
+                    }
+                } else {
+                    if (hak.stan == StanHaka::PrzyciagaGracza && gracz1->getVelocity().y < 0) {
+                        gracz1->getVelocity().y = -400.0f;
+                    }
+
+                    hak.stan = StanHaka::Nieaktywny;
+                    hak.trafionaSkrzynka = nullptr;
                 }
             }
         }
+
+
+
         sf::Time elapsed = clock.restart();
 
         gracz1->ruchom(event);
-        ruch(elapsed, *gracz1, *skrzynka1, t, grawitacja, window);
+        gracz1->Sterowanie();
+        ruch(elapsed, *gracz1, *skrzynka1, t, grawitacja, window,hak);
 
         // clear the window with black color
         window.clear(sf::Color(128,128,128));
@@ -67,9 +84,9 @@ int main(){
 
 
 
-
     window.draw(*skrzynka1);
     window.draw(*gracz1);
+    rysuj_hak(window,*gracz1,hak);
         // end the current frame
         window.display();
     }

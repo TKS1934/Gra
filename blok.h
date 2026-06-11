@@ -24,7 +24,7 @@ public:
 
 
         if(ID==0){
-            this->setFillColor(sf::Color::Transparent); // Powietrze pozostaje niewidoczne
+            this->setFillColor(sf::Color::Transparent);
             isPFP = 1;
             isPFB = 1;
         }

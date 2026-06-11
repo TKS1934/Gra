@@ -23,4 +23,5 @@ HEADERS += \
     byt.h \
     funkcje.h\
     gracz.h\
+    hak.h \
     skrzynka1.h
