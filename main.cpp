@@ -13,14 +13,14 @@ int main(){
     sf::RenderWindow window(sf::VideoMode(2800, 1600), "My window",sf::Style::Fullscreen);
     const float grawitacja=400;
 
-    auto t=generowanie_planszy_z_pliku("mapa2.txt",window,grawitacja);
+    auto t=generowanie_planszy_z_pliku("mapa.txt",window,grawitacja);
 
 
     gracz *gracz1;
     gracz1= new gracz({10,20},{250,250},{0,0},window,grawitacja,0);
 
     skrzynka *skrzynka1;
-    skrzynka1 = new skrzynka({40, 40}, {250, 250}, {0,0}, window, grawitacja, 4);
+    skrzynka1 = new skrzynka({40, 40}, {2000, 250}, {0,0}, window, grawitacja, 4);
 
     Hak hak;
     hak.silaPrzyciagania=grawitacja*(10/3);
