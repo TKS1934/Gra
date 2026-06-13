@@ -21,8 +21,8 @@ void czy_wygrana(skrzynka& s, vector<vector<blok>>& t,bool& cW){
 enum class StanGry { Menu, Rozgrywka, Wygrana, Poziomy };
 
 
-
 int main(){
+
     sf::RenderWindow window(sf::VideoMode(1920, 1080), "My window",sf::Style::Fullscreen); //,sf::Style::Fullscreen
     const float grawitacja=400;
     bool czyWygrane=0;
@@ -41,11 +41,13 @@ int main(){
 
     sf::Clock clock;
     sf::Font font;
+
     if (!font.loadFromFile("arial.ttf")) {
         cout << "Nie udalo sie zaladowac czcionki!" << endl;
     }
     sf::Text tekstGratulacje;
     tekstGratulacje.setFont(font);
+
     tekstGratulacje.setString("GRATULACJE! WYGRALES!");
     tekstGratulacje.setCharacterSize(100);
     tekstGratulacje.setFillColor(sf::Color::Yellow);
@@ -116,6 +118,7 @@ int main(){
                 }
             }
 
+
             else if(aktualnyStan == StanGry::Poziomy){
                 sf::Vector2i mousePos = sf::Mouse::getPosition(window);
                 sf::Vector2f mousePosF(mousePos.x, mousePos.y);
@@ -164,6 +167,7 @@ int main(){
                     } else {
                         if (hak.stan == StanHaka::PrzyciagaGracza && gracz1->getVelocity().y < 0) {
                             gracz1->getVelocity().y = -220.0f;
+
                         }
 
                         hak.stan = StanHaka::Nieaktywny;

@@ -282,7 +282,6 @@ Makefile: ../../gra.pro ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/win32-g+
 		../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/qt_config.prf \
 		../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/win32-g++/qmake.conf \
 		../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/spec_post.prf \
-		.qmake.stash \
 		../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/exclusive_builds.prf \
 		../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/toolchain.prf \
 		../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/default_pre.prf \
@@ -301,6 +300,7 @@ Makefile: ../../gra.pro ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/win32-g+
 		../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/yacc.prf \
 		../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/lex.prf \
 		../../gra.pro \
+		.qmake.stash \
 		../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/build_pass.prf
 	$(QMAKE) -o Makefile ..\..\gra.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
 ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/spec_pre.prf:
@@ -515,7 +515,6 @@ Makefile: ../../gra.pro ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/win32-g+
 ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/qt_config.prf:
 ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/win32-g++/qmake.conf:
 ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/spec_post.prf:
-.qmake.stash:
 ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/exclusive_builds.prf:
 ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/toolchain.prf:
 ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/default_pre.prf:
@@ -534,6 +533,7 @@ Makefile: ../../gra.pro ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/win32-g+
 ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/yacc.prf:
 ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/lex.prf:
 ../../gra.pro:
+.qmake.stash:
 ../../../../qttenlepszu/6.11.0/mingw_64/mkspecs/features/build_pass.prf:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ..\..\gra.pro -spec win32-g++ "CONFIG+=debug" "CONFIG+=qml_debug"
