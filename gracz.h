@@ -29,26 +29,22 @@ public:
         velocity.y=0;
     }
 
-
-    void ruchom(sf::Event event){
-
-    }
     void Sterowanie(){
         // Ruch poziomy A D
         velocity.x = 0.0f; // Reset prędkości
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-            velocity.x = 230.0f;
+            velocity.x = 200.0f;
         }
         else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-            velocity.x = -230.0f;
+            velocity.x = -200.0f;
         }
 
         //  skok W
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
 
             if (tG && !skok){
-                velocity.y = (-100- gravity / 2);
+                velocity.y = (-20- gravity / 2);
                 tG = false;
                 skok = true;
             }
