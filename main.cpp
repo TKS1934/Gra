@@ -26,6 +26,7 @@ int main(){
     sf::RenderWindow window(sf::VideoMode(2800, 1600), "My window",sf::Style::Fullscreen); //,sf::Style::Fullscreen
     const float grawitacja=400;
     bool czyWygrane=0;
+
     auto t=generowanie_planszy_z_pliku("mapa2.txt",window,grawitacja);
 
 

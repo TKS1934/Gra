@@ -37,7 +37,7 @@ vector<vector<blok>> generowanie_planszy_z_pliku(const std::string& nazwa_pliku,
 
 
     if (!czyZaladowanoTekstury) {
-        teksturyBlokow[1].loadFromFile("cegla2.png");
+        teksturyBlokow[1].loadFromFile("cegla4.png");
         teksturyBlokow[2].loadFromFile("stop sign.png");
         teksturyBlokow[3].loadFromFile("liscie.png");
         czyZaladowanoTekstury = true;
