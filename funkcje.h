@@ -203,7 +203,7 @@ void aktualizuj_hak(Hak& hak, gracz& g1, vector<vector<blok>>& t, float dt, skrz
         // Jeśli hak poleci za daleko znika
         float dx = hak.pozycja.x - g1.getPosition().x;
         float dy = hak.pozycja.y - g1.getPosition().y;
-        if (std::hypot(dx, dy) > 700.f) {
+        if (std::hypot(dx, dy) > 700.f) {  // długość haka
             hak.stan = StanHaka::Nieaktywny;
         }
     }

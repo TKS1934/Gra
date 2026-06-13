@@ -12,7 +12,6 @@ void czy_wygrana(skrzynka& s, vector<vector<blok>>& t,bool& cW){
         for (auto &r : pom) {
             if (s.getGlobalBounds().intersects(r.getGlobalBounds()) && r.Ret_ID()==5){
                 cW=1;
-                cout<<"gowno";
             }
         }
     }
@@ -62,7 +61,7 @@ int main(){
 
     sf::Text tekstTytul;
     tekstTytul.setFont(font);
-    tekstTytul.setString("Nazwa Gry");
+    tekstTytul.setString("Hook & Box");
     tekstTytul.setCharacterSize(120);
     tekstTytul.setFillColor(sf::Color::White);
     tekstTytul.setPosition(window.getSize().x / 2.f - tekstTytul.getGlobalBounds().width / 2.f, 300.f);
