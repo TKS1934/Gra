@@ -13,7 +13,7 @@ int main(){
     sf::RenderWindow window(sf::VideoMode(1960, 1080), "My window",sf::Style::Fullscreen);
     const float grawitacja=400;
 
-    auto t=generowanie_planszy_z_pliku("mapa3.txt",window,grawitacja);
+    auto t=generowanie_planszy_z_pliku("mapa2.txt",window,grawitacja);
 
 
     gracz *gracz1;
@@ -26,7 +26,6 @@ int main(){
     hak.silaPrzyciagania=grawitacja*(10/3);
 
     sf::Clock clock;
-
 
     // run the program as long as the window is open
     while (window.isOpen()) {
