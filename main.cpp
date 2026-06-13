@@ -10,22 +10,23 @@ using namespace std;
 
 
 int main(){
-    sf::RenderWindow window(sf::VideoMode(2800, 1600), "My window",sf::Style::Fullscreen);
+    sf::RenderWindow window(sf::VideoMode(1960, 1080), "My window",sf::Style::Fullscreen);
     const float grawitacja=400;
 
-    auto t=generowanie_planszy_z_pliku("mapa.txt",window,grawitacja);
+    auto t=generowanie_planszy_z_pliku("mapa3.txt",window,grawitacja);
 
 
     gracz *gracz1;
     gracz1= new gracz({10,20},{250,250},{0,0},window,grawitacja,0);
 
     skrzynka *skrzynka1;
-    skrzynka1 = new skrzynka({40, 40}, {2000, 250}, {0,0}, window, grawitacja, 4);
+    skrzynka1 = new skrzynka({float(window.getSize().x)*4/3/97, float(window.getSize().y)*4/3/60}, {250, 250}, {0,0}, window, grawitacja, 4);
 
     Hak hak;
     hak.silaPrzyciagania=grawitacja*(10/3);
 
     sf::Clock clock;
+
 
     // run the program as long as the window is open
     while (window.isOpen()) {
