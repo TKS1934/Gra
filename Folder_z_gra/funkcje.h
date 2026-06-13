@@ -179,7 +179,7 @@ void aktualizuj_hak(Hak& hak, gracz& g1, vector<vector<blok>>& t, float dt, skrz
     // Lot haka
     if (hak.stan == StanHaka::Wystrzelony) {
         hak.pozycja += hak.kierunek * hak.predkosc * dt;
-        sf::FloatRect boundsHaka(hak.pozycja.x - 4, hak.pozycja.y - 4, 8, 8); // Większy punkt kolizji liny
+        sf::FloatRect boundsHaka(hak.pozycja.x - 3, hak.pozycja.y - 3, 8, 8); // Większy punkt kolizji liny
 
         // Sprawdzamy skrzynkę
         if (boundsHaka.intersects(s.getGlobalBounds())) {
@@ -203,7 +203,7 @@ void aktualizuj_hak(Hak& hak, gracz& g1, vector<vector<blok>>& t, float dt, skrz
         // Jeśli hak poleci za daleko znika
         float dx = hak.pozycja.x - g1.getPosition().x;
         float dy = hak.pozycja.y - g1.getPosition().y;
-        if (std::hypot(dx, dy) > 1000.f) {
+        if (std::hypot(dx, dy) > 700.f) {  // długość haka
             hak.stan = StanHaka::Nieaktywny;
         }
     }
@@ -260,8 +260,8 @@ void ruch(sf::Time elapsed, gracz& g1, skrzynka& s, vector<vector<blok>>& t, con
         sf::Vector2f kierunek = hak.pozycja - g1.getPosition();
         float odleglosc = std::hypot(kierunek.x, kierunek.y);
 
-        if (odleglosc > 20.f) {
-            g1.velocity = (kierunek / odleglosc) * hak.silaPrzyciagania;
+        if (odleglosc > 10.f) {
+            g1.velocity = (kierunek / odleglosc) * hak.silaPrzyciagania*0.8f;
         } else {
             hak.stan = StanHaka::Nieaktywny;
             g1.velocity = {0, 0};
@@ -280,11 +280,11 @@ void ruch(sf::Time elapsed, gracz& g1, skrzynka& s, vector<vector<blok>>& t, con
         sf::Vector2f doGracza = g1.getPosition() - s.getPosition();
         float odleglosc = std::hypot(doGracza.x, doGracza.y);
 
-        if (odleglosc > 100.f) {
+        if (odleglosc > 60.f) {
             sf::Vector2f dir = doGracza / odleglosc;
 
             float sila = hak.silaPrzyciagania * (odleglosc / 100.f);
-            if (sila > 600.f) sila = 600.f;
+            if (sila > 480.f) sila = 480.f;
 
             s.getVelocity().x = dir.x * sila;
 
@@ -292,7 +292,7 @@ void ruch(sf::Time elapsed, gracz& g1, skrzynka& s, vector<vector<blok>>& t, con
                 s.getVelocity().y = dir.y * sila;
             }
         } else {
-            s.getVelocity().x *= 0.8f;
+            s.getVelocity().x *= 0.7f;
             if (std::abs(s.getVelocity().x) < 10.f) s.getVelocity().x = 0;
 
             if (s.getVelocity().y < 0) {
@@ -396,3 +396,4 @@ void ruch(sf::Time elapsed, gracz& g1, skrzynka& s, vector<vector<blok>>& t, con
     kolizja_bloki_Y(g1, t);
     kolizja_b_gra(g1, window);
 }
+
