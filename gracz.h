@@ -29,10 +29,6 @@ public:
         velocity.y=0;
     }
 
-
-    void ruchom(sf::Event event){
-
-    }
     void Sterowanie(){
         // Ruch poziomy A D
         velocity.x = 0.0f; // Reset prędkości

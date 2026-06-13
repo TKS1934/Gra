@@ -396,3 +396,4 @@ void ruch(sf::Time elapsed, gracz& g1, skrzynka& s, vector<vector<blok>>& t, con
     kolizja_bloki_Y(g1, t);
     kolizja_b_gra(g1, window);
 }
+
